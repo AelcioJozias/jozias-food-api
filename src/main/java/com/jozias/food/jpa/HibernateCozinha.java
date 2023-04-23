@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jozias.food.domain.model.Cozinha;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 
 @Component
-public class CadastroCozinha {
+public class HibernateCozinha {
 	
 	@PersistenceContext
 	private EntityManager manager;
@@ -28,5 +29,10 @@ public class CadastroCozinha {
 	
 	public Cozinha buscar(Long id) {
 		return manager.find(Cozinha.class, id);
+	}
+	
+	@Transactional
+	public void excluir(Cozinha cozinha) {
+		manager.remove(buscar(cozinha.getId()));
 	}
 }

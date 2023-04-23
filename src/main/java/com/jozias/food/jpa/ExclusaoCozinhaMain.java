@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import com.jozias.food.JoziasFoodApiApplication;
 import com.jozias.food.domain.model.Cozinha;
 
-public class BuscarCozinhaMain {
+public class ExclusaoCozinhaMain {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(JoziasFoodApiApplication.class)
@@ -18,11 +18,19 @@ public class BuscarCozinhaMain {
 
 		HibernateCozinha cadastroCozinha=  applicationContext.getBean(HibernateCozinha.class);
 		
-		Cozinha cozinha2 = cadastroCozinha.buscar(1L);
-		//importante, se vc instanciar o objeto sem ao invés de fazer a busca no banco, 
-		// vai dar uma exception por causa que o a instancia está em estado transiente
+		List<Cozinha> cozinhas = cadastroCozinha.listar();
 		
-		cadastroCozinha.excluir(cozinha2);
+		cozinhas.forEach(e -> System.out.println(e.getNome()));
+		
+		Cozinha cozinha1 = new Cozinha();
+		cozinha1.setNome("Brasileira");
+		
+		Cozinha cozinha2 = new Cozinha();
+		cozinha2.setNome("Japonesa");
+		
+		cadastroCozinha.adicionar(cozinha1);
+		cadastroCozinha.adicionar(cozinha2);
+		
 	}
 
 }

@@ -16,7 +16,7 @@ public class AlterarCozinha {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
-		CadastroCozinha cadastroCozinha=  applicationContext.getBean(CadastroCozinha.class);
+		HibernateCozinha cadastroCozinha=  applicationContext.getBean(HibernateCozinha.class);
 		
 		List<Cozinha> cozinhas = cadastroCozinha.listar();
 		

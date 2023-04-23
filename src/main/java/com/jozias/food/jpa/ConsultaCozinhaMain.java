@@ -14,8 +14,10 @@ public class ConsultaCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
-		CadastroCozinha beanCozinha=  applicationContext.getBean(CadastroCozinha.class);
+		HibernateCozinha beanCozinha=  applicationContext.getBean(HibernateCozinha.class);
 		
+		//se usar apenas assim, buscando antes, também dá ruim, porque vai buscar e depois fechar a conexão
+		//por isso deixeia busca também implmentada dentro do excluir
 		Cozinha cozinha = beanCozinha.buscar(2L);
 		
 		System.out.println(cozinha.getNome());
