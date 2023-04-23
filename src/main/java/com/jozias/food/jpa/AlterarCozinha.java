@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import com.jozias.food.JoziasFoodApiApplication;
 import com.jozias.food.domain.model.Cozinha;
 
-public class BuscarCozinhaMain {
+public class AlterarCozinha {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(JoziasFoodApiApplication.class)
@@ -18,10 +18,17 @@ public class BuscarCozinhaMain {
 
 		CadastroCozinha cadastroCozinha=  applicationContext.getBean(CadastroCozinha.class);
 		
+		List<Cozinha> cozinhas = cadastroCozinha.listar();
+		
+		cozinhas.forEach(e -> System.out.println(e.getNome()));
+		
+		Cozinha cozinha1 = new Cozinha();
+		cozinha1.setNome("Brasileira");
+		
 		Cozinha cozinha2 = new Cozinha();
-		cozinha2.setNome("Arabe");
-		cozinha2.setId(1L);
-		//usando o o merge do hibernate ele também consegue alterar se identificar um id sendo passado
+		cozinha2.setNome("Japonesa");
+		
+		cadastroCozinha.adicionar(cozinha1);
 		cadastroCozinha.adicionar(cozinha2);
 		
 	}
