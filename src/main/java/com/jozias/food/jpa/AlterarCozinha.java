@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.jozias.food.JoziasFoodApiApplication;
 import com.jozias.food.domain.model.Cozinha;
+import com.jozias.food.domain.reporitory.CozinhaRepository;
 
 public class AlterarCozinha {
 
@@ -16,9 +17,9 @@ public class AlterarCozinha {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
-		HibernateCozinha cadastroCozinha=  applicationContext.getBean(HibernateCozinha.class);
+		CozinhaRepository CozinhaRepository =  applicationContext.getBean(CozinhaRepository.class);
 		
-		List<Cozinha> cozinhas = cadastroCozinha.listar();
+		List<Cozinha> cozinhas = CozinhaRepository.listar();
 		
 		cozinhas.forEach(e -> System.out.println(e.getNome()));
 		
@@ -28,8 +29,8 @@ public class AlterarCozinha {
 		Cozinha cozinha2 = new Cozinha();
 		cozinha2.setNome("Japonesa");
 		
-		cadastroCozinha.adicionar(cozinha1);
-		cadastroCozinha.adicionar(cozinha2);
+		CozinhaRepository.adicionar(cozinha1);
+		CozinhaRepository.adicionar(cozinha2);
 		
 	}
 

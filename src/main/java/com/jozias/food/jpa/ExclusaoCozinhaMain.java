@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.jozias.food.JoziasFoodApiApplication;
 import com.jozias.food.domain.model.Cozinha;
+import com.jozias.food.domain.reporitory.CozinhaRepository;
 
 public class ExclusaoCozinhaMain {
 
@@ -16,7 +17,7 @@ public class ExclusaoCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
-		HibernateCozinha cadastroCozinha=  applicationContext.getBean(HibernateCozinha.class);
+		CozinhaRepository cadastroCozinha =  applicationContext.getBean(CozinhaRepository.class);
 		
 		List<Cozinha> cozinhas = cadastroCozinha.listar();
 		

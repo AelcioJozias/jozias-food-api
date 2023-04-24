@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.jozias.food.JoziasFoodApiApplication;
 import com.jozias.food.domain.model.Cozinha;
+import com.jozias.food.domain.reporitory.CozinhaRepository;
 
 public class ConsultaCozinhaMain {
 
@@ -14,11 +15,11 @@ public class ConsultaCozinhaMain {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
-		HibernateCozinha beanCozinha=  applicationContext.getBean(HibernateCozinha.class);
+		CozinhaRepository beanCozinha=  applicationContext.getBean(CozinhaRepository.class);
 		
 		//se usar apenas assim, buscando antes, também dá ruim, porque vai buscar e depois fechar a conexão
 		//por isso deixeia busca também implmentada dentro do excluir
-		Cozinha cozinha = beanCozinha.buscar(2L);
+		Cozinha cozinha = beanCozinha.porId(2L);
 		
 		System.out.println(cozinha.getNome());
 		
