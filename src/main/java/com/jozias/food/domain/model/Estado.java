@@ -24,7 +24,6 @@ public class Estado {
 	private String nome;
 	
 	@ManyToOne
-	@Column(nullable = false)
 	@JoinColumn(nullable = false)//this join collumna annotation is used
 	// in the place of Collumn, just this, nothing more!
 	private Estado estado;
