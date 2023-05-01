@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,4 +23,8 @@ public class Cidade {
 	@Column(nullable = false)
 	private String nome;
 	
+	@ManyToOne
+	@JoinColumn(nullable = false)//this join collumna annotation is used
+	// in the place of Collumn, just this, nothing more!
+	private Estado estado;
 }
