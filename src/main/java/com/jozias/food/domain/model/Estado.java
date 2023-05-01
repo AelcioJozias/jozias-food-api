@@ -1,8 +1,5 @@
 package com.jozias.food.domain.model;
 
-import java.math.BigDecimal;
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +13,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Restaurante {
-
+public class Estado {
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +23,10 @@ public class Restaurante {
 	@Column(nullable = false)
 	private String nome;
 	
-	@Column(name = "taxa_frete", nullable = false)
-	private BigDecimal taxaFrete;
-	
 	@ManyToOne
-	@JoinColumn(name = "cozinha_id", nullable = false) //é como se fosse usar o column, mas para a relacao
-	private Cozinha cozinha;
+	@Column(nullable = false)
+	@JoinColumn(nullable = false)//this join collumna annotation is used
+	// in the place of Collumn, just this, nothing more!
+	private Estado estado;
+	
 }
