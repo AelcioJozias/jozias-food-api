@@ -1,5 +1,8 @@
 package com.jozias.food.api.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
-	@GetMapping
+	@GetMapping(produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
 	public List<Cozinha> listar(){
 		return cozinhaRepository.listar();
 	}
