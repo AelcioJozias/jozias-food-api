@@ -6,6 +6,8 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +32,9 @@ public class CozinhaController {
 	}
 	
 	@GetMapping(value = "/{cozinhaId}")
-	public Cozinha buscar(@PathVariable("cozinhaId") Long id) {
-		System.out.println(id);
-		return cozinhaRepository.porId(id);
+	public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long id) {
+		Cozinha cozinha = cozinhaRepository.porId(id);
+		ResponseEntity<Cozinha> retorno =  (cozinha != null) ? ResponseEntity.ok(cozinha) : ResponseEntity.notFound().build();
+		return retorno;
 	}
 }
