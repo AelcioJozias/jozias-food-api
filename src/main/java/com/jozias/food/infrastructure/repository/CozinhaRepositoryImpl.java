@@ -24,6 +24,8 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 			.getResultList();
 	}
 	
+	
+	
 	@Transactional
 	@Override
 	public Cozinha adicionar(Cozinha cozinha) {
@@ -38,8 +40,15 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 	
 	@Transactional
 	@Override
-	public void remover(Cozinha cozinha) {
+	public void remover(Cozinha cozinha) {//isso aqui não ficou legal, é melhor passar apenas o id, nao a instancia de cozinha
 		manager.remove(porId(cozinha.getId()));
+	}
+
+
+	@Transactional
+	@Override
+	public void atualizar(Cozinha cozinha) {
+		manager.merge(cozinha);
 	}
 	
 }
