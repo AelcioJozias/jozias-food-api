@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jozias.food.domain.model.Cozinha;
 import com.jozias.food.domain.reporitory.CozinhaRepository;
+import com.jozias.food.domain.service.CadastroCozinhaService;
 
 
 @RestController
@@ -31,6 +34,9 @@ public class CozinhaController {
 	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
+	
+	@Autowired
+	CadastroCozinhaService cadastroCozinhaService;
 	
 	@GetMapping(produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
 	public List<Cozinha> listar(){
@@ -48,7 +54,7 @@ public class CozinhaController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@PostMapping
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-		return cozinhaRepository.adicionar(cozinha); 
+		return cadastroCozinhaService.salvar(cozinha);
 	}
 	
 	@PutMapping("/{id}")
@@ -64,11 +70,15 @@ public class CozinhaController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Cozinha>excluirCozinha(@PathVariable Long id) {
-		Cozinha cozinha = cozinhaRepository.porId(id);
-		if(cozinha == null) {
-			return ResponseEntity.notFound().build();
+		try {
+			Cozinha cozinha = cozinhaRepository.porId(id);
+			if(cozinha == null) {
+				return ResponseEntity.notFound().build();
+			}
+			cozinhaRepository.remover(cozinha);
+			return ResponseEntity.noContent().build();
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
-		cozinhaRepository.remover(cozinha);
-		return ResponseEntity.ok().body(cozinha);
 	}
 }
