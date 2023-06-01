@@ -2,6 +2,7 @@ package com.jozias.food.infrastructure.repository;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,11 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 	
 	@Transactional
 	@Override
-	public void remover(Cozinha cozinha) {//isso aqui não ficou legal, é melhor passar apenas o id, nao a instancia de cozinha
+	public void remover(Long id) {//isso aqui não ficou legal, é melhor passar apenas o id, nao a instancia de cozinha
+		Cozinha cozinha = porId(id);
+		if(cozinha == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
 		manager.remove(porId(cozinha.getId()));
 	}
 
