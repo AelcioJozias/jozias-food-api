@@ -1,7 +1,6 @@
 package com.jozias.food.domain.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +25,10 @@ public class Restaurante {
 	@Column(nullable = false)
 	private String nome;
 	
-	@Column(name = "taxa_frete", nullable = false)
+	@Column(name = "taxa_frete", nullable = false)/*important note about this name
+	to send the request you have use it the object name,
+	the name passed through "name paramenter", is just to change the database
+	table*/
 	private BigDecimal taxaFrete;
 	
 	@ManyToOne

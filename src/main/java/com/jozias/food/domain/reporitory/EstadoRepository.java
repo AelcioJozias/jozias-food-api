@@ -2,7 +2,6 @@ package com.jozias.food.domain.reporitory;
 
 import java.util.List;
 
-import com.jozias.food.domain.model.Cozinha;
 import com.jozias.food.domain.model.Estado;
 
 public interface EstadoRepository {

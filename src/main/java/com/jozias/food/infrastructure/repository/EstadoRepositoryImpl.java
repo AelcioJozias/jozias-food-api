@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jozias.food.domain.model.Cozinha;
 import com.jozias.food.domain.model.Estado;
-import com.jozias.food.domain.reporitory.CozinhaRepository;
 import com.jozias.food.domain.reporitory.EstadoRepository;
 
 import jakarta.persistence.EntityManager;
