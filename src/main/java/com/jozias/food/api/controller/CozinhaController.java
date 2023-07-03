@@ -28,7 +28,6 @@ import com.jozias.food.domain.service.CadastroCozinhaService;
 
 
 @RestController
-@Controller
 @RequestMapping(value = "/cozinhas")
 public class CozinhaController {
 	

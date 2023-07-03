@@ -15,6 +15,7 @@ import jakarta.persistence.PersistenceContext;
 @Repository
 public class CozinhaRepositoryImpl implements CozinhaRepository {
 
+	private static final String NOME = "nome";
 	@PersistenceContext
 	private EntityManager manager;
 	
@@ -54,6 +55,15 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 	@Override
 	public void atualizar(Cozinha cozinha) {
 		manager.merge(cozinha);
+	}
+
+
+
+	@Override
+	public List<Cozinha> consultarPorNome(String nome) {
+		return manager.createQuery("from Cozinha where nome like :nome", Cozinha.class)
+				.setParameter(NOME, "%".concat(nome).concat("%"))
+				.getResultList();
 	}
 	
 }
