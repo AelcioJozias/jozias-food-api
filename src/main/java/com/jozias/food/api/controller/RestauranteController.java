@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.jozias.food.domain.exception.EntidadeDeAssociacaoNaoExisteException;
 import com.jozias.food.domain.exception.EntidadeNaoEncontradaException;
 import com.jozias.food.domain.model.Restaurante;

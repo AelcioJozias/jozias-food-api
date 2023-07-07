@@ -1,14 +1,9 @@
 package com.jozias.food.domain.reporitory;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jozias.food.domain.model.Cidade;
 
-public interface CidadeRepository {
-	
-	List<Cidade> listar();
-	Cidade porId(Long id);
-	Cidade adicionar(Cidade cidade);
-	void remover(Cidade cidade);
+public interface CidadeRepository extends JpaRepository<Cidade, Long>{
 	
 }

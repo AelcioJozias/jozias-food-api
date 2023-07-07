@@ -1,14 +1,7 @@
 package com.jozias.food.domain.reporitory;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jozias.food.domain.model.Estado;
 
-public interface EstadoRepository {
-	
-	List<Estado> listar();
-	Estado porId(Long id);
-	Estado adicionar(Estado cozinha);
-	void remover(Estado cozinha);
-	
-}
+public interface EstadoRepository extends JpaRepository<Estado, Long> {}

@@ -12,37 +12,36 @@ import com.jozias.food.domain.reporitory.CidadeRepository;
 
 @Service
 public class CadastroCidadeService {
-	
+
+	private static final String ID = "id";
 	private static final String NÃO_EXISTE_UM_RECURSO_COM_O_ID_S = "Não existe um recurso com o id %S ";
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
-	public List<Cidade> listarCidade(){
-		return cidadeRepository.listar();
+
+	public List<Cidade> listarCidade() {
+		return cidadeRepository.findAll();
 	}
-	
+
 	public Cidade pesquisarCidade(Long id) {
-		return cidadeRepository.porId(id);
+		return cidadeRepository.findById(id).get();
 	}
-	
+
 	public Cidade atualizarRecurso(Long id, Cidade Cidade) {
-		Cidade CidadeAtual = cidadeRepository.porId(id);
-		if(CidadeAtual == null) {
+		Cidade CidadeAtual = cidadeRepository.findById(id).orElseThrow(() -> {
 			throw new EntidadeNaoEncontradaException(String.format(NÃO_EXISTE_UM_RECURSO_COM_O_ID_S, id));
-		}
-		BeanUtils.copyProperties(Cidade, CidadeAtual, "id");
-		return cidadeRepository.adicionar(CidadeAtual);
+		});
+		BeanUtils.copyProperties(Cidade, CidadeAtual, ID);
+		return cidadeRepository.save(CidadeAtual);
 	}
-	
+
 	public void deletar(Long id) {
-		Cidade CidadeARemover = cidadeRepository.porId(id);
-		if(CidadeARemover == null) {
+		Cidade cidadeARemover = cidadeRepository.findById(id).orElseThrow(() -> {
 			throw new EntidadeNaoEncontradaException(String.format(NÃO_EXISTE_UM_RECURSO_COM_O_ID_S, id));
-		}
-		cidadeRepository.remover(CidadeARemover);
+		});
+		cidadeRepository.delete(cidadeARemover);
 	}
-	
+
 	public Cidade salvarCidade(Cidade Cidade) {
-		return cidadeRepository.adicionar(Cidade);
+		return cidadeRepository.save(Cidade);
 	}
 }

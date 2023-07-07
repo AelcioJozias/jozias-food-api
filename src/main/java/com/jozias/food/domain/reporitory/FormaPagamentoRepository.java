@@ -1,14 +1,7 @@
 package com.jozias.food.domain.reporitory;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jozias.food.domain.model.FormaPagamento;
 
-public interface FormaPagamentoRepository {
-	
-	List<FormaPagamento> listar();
-	FormaPagamento porId(Long id);
-	FormaPagamento adicionar(FormaPagamento formaPagamento);
-	void remover(FormaPagamento formaPagamento);
-	
-}
+public interface FormaPagamentoRepository extends JpaRepository<FormaPagamento, Long> {}

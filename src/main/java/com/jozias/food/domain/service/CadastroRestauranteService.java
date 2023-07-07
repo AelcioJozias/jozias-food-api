@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.jozias.food.domain.exception.EntidadeDeAssociacaoNaoExisteException;
 import com.jozias.food.domain.exception.EntidadeNaoEncontradaException;
-import com.jozias.food.domain.model.Cozinha;
 import com.jozias.food.domain.model.Restaurante;
 import com.jozias.food.domain.reporitory.CozinhaRepository;
 import com.jozias.food.domain.reporitory.RestauranteRepository;
@@ -29,40 +28,39 @@ public class CadastroRestauranteService {
 	CozinhaRepository cozinhaRepository;
 	
 	public List<Restaurante> listarRestaurante(){
-		return restauranteRepository.listar();
+		return restauranteRepository.findAll();
 	}
 	
 	public Restaurante pesquisarRestaurantePorId(Long id) {
-		return restauranteRepository.porId(id);
+		return restauranteRepository.findById(id).get();
 	}
 	
 	public Restaurante salvar(Restaurante restaurante) {
 			Long cozinhaId = restaurante.getCozinha().getId();
-			Cozinha cozinha = cozinhaRepository.porId(cozinhaId);
-			if(cozinha == null) {
-				throw new EntidadeNaoEncontradaException(String.format(NÃO_FOI_ENCONTRADA_UMA_COZINHA_COM_O_ID,
-						cozinhaId));
-			}
-		return restauranteRepository.adicionar(restaurante);
+			cozinhaRepository.findById(cozinhaId)
+					.orElseThrow(() -> new EntidadeNaoEncontradaException(String.
+					format(NÃO_FOI_ENCONTRADA_UMA_COZINHA_COM_O_ID, cozinhaId))
+					);
+		return restauranteRepository.save(restaurante);
 	}
 
 	public Restaurante atualizarCadastroRestaurante(Long id, Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-		Restaurante restauranteAtual =  restauranteRepository.porId(id);
+		Restaurante restauranteAtual =  restauranteRepository.findById(id).get();
 		lancaExcecaoCasoOResourceNaoExista(restauranteAtual, id);
 		verificaSeExisteUmaCozinhaPeloId(cozinhaId);
 		BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
-		restauranteRepository.adicionar(restauranteAtual);
+		restauranteRepository.save(restauranteAtual);
 		return restauranteAtual;
 	}
 
 	private void verificaSeExisteUmaCozinhaPeloId(Long cozinhaId) {
-		if(cozinhaRepository.porId(cozinhaId) == null) {
+		if(cozinhaRepository.findById(cozinhaId).isEmpty()) {
 			throw new EntidadeDeAssociacaoNaoExisteException(String.format(NÃO_EXISTE_UMA_COZINHA_COM_O_ID, cozinhaId));
 		}
 	}
 
-	private void lancaExcecaoCasoOResourceNaoExista(Restaurante restaurante,Long id) {
+	private void lancaExcecaoCasoOResourceNaoExista(Restaurante restaurante, Long id) {
 		if(restaurante == null) {
 			throw new EntidadeNaoEncontradaException(String.format(NÃO_HÁ_UMA_ENTIDADE_COM_O_ID, id));
 		}

@@ -18,31 +18,29 @@ public class CadastroEstadoService {
 	private EstadoRepository estadoRepository;
 	
 	public List<Estado> listarEstado(){
-		return estadoRepository.listar();
+		return estadoRepository.findAll();
 	}
 	
 	public Estado pesquisarEstado(Long id) {
-		return estadoRepository.porId(id);
+		return estadoRepository.findById(id).get();
 	}
 	
 	public Estado atualizarRecurso(Long id, Estado estado) {
-		Estado estadoAtual = estadoRepository.porId(id);
-		if(estadoAtual == null) {
+		Estado estadoAtual = estadoRepository.findById(id).orElseThrow(()-> {
 			throw new EntidadeNaoEncontradaException(String.format(NÃO_EXISTE_UM_RECURSO_COM_O_ID_S, id));
-		}
+		});
 		BeanUtils.copyProperties(estado, estadoAtual, "id");
-		return estadoRepository.adicionar(estadoAtual);
+		return estadoRepository.save(estadoAtual);
 	}
 	
 	public void deletar(Long id) {
-		Estado estadoARemover = estadoRepository.porId(id);
-		if(estadoARemover == null) {
+		Estado estadoARemover = estadoRepository.findById(id).orElseThrow(()->{
 			throw new EntidadeNaoEncontradaException(String.format(NÃO_EXISTE_UM_RECURSO_COM_O_ID_S, id));
-		}
-		estadoRepository.remover(estadoARemover);
+		});
+		estadoRepository.delete(estadoARemover);
 	}
 	
 	public Estado salvarEstado(Estado estado) {
-		return estadoRepository.adicionar(estado);
+		return estadoRepository.save(estado);
 	}
 }
